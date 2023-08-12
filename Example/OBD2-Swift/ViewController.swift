@@ -7,14 +7,14 @@
 //
 
 import UIKit
-import OBD2_Swift
+import OBD2
 
 class ViewController: UIViewController {
-    static var host = "192.168.0.10"
+    static var host = "192.168.0.103"
     static var port = 35000
     
     //var scanTool = ELM327(host: host , port: port)
-    let obd = OBD2()
+    let obd = OBD2(host: host, port: port)
     
     @IBOutlet weak var dtcButton: UIButton!
     @IBOutlet weak var speedButton: UIButton!
