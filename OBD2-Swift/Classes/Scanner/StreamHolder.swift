@@ -18,8 +18,13 @@ class StreamHolder: NSObject {
     
     var delegate : StreamFlowDelegate?
     
-    var inputStream : InputStream!
-    var outputStream : OutputStream!
+    var inputStream : InputStream
+    var outputStream : OutputStream
+    
+    init(inputStream: InputStream, outputStream: OutputStream) {
+        self.inputStream = inputStream
+        self.outputStream = outputStream
+    }
     
     let obdQueue: OperationQueue = {
         let queue = OperationQueue()
@@ -29,20 +34,6 @@ class StreamHolder: NSObject {
     }()
     
     var cachedWriteData = Data()
-    
-    var host = ""
-    var port = 0
-
-    
-    func createStreams() {
-        var readStream: InputStream?
-        var writeStream: OutputStream?
-        Stream.getStreamsToHost(withName: host, port: port, inputStream: &readStream, outputStream: &writeStream)
-        guard let a = readStream else { fatalError("Read stream not created") }
-        guard let b = writeStream else { fatalError("Write stream not created") }
-        self.inputStream = a
-        self.outputStream = b
-    }
     
     func close(){
         self.inputStream.delegate = nil

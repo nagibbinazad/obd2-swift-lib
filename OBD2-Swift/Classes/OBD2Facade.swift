@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreBluetooth
 
 
 protocol ScanDelegate {
@@ -17,9 +18,6 @@ open class OBD2 {
     
     public typealias CallBack = (Bool, Error?) -> ()
     
-    private(set) var host : String
-    private(set) var port : Int
-    
     private var scanner : Scanner
     
     public var stateChanged: StateChangeCallback? {
@@ -27,16 +25,18 @@ open class OBD2 {
             scanner.stateChanged = stateChanged
         }
     }
-    
-    public convenience init(){
-        self.init(host : "192.168.0.10", port : 35000)
+
+    public init(host : String, port : Int){
+        var readStream: InputStream?
+        var writeStream: OutputStream?
+        Stream.getStreamsToHost(withName: host, port: port, inputStream: &readStream, outputStream: &writeStream)
+        guard let inputStream = readStream else { fatalError("Read stream not created") }
+        guard let outputStream = writeStream else { fatalError("Write stream not created") }
+        self.scanner = Scanner(inputStream: inputStream, outputStream: outputStream)
     }
     
-    public init(host : String, port : Int){
-        self.host = host
-        self.port = port
-        
-        self.scanner = Scanner(host: host, port: port)
+    public init(reader: CBCharacteristic, writer: CBCharacteristic) {
+        self.scanner = Scanner(inputStream: BluetoothInputStream(characteristic: reader), outputStream: BluetoothOutputStream(characteristic: writer))
     }
     
     var logger : Any?

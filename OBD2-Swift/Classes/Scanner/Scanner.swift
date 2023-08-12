@@ -45,13 +45,11 @@ class `Scanner`: StreamHolder {
     
     var currentPIDGroup: UInt8 = 0x00
     
-    init(host: String, port: Int) {
-        super.init()
-        self.host = host
-        self.port = port
-        
+    override init(inputStream: InputStream, outputStream: OutputStream) {
+        super.init(inputStream: inputStream, outputStream: outputStream)
         delegate = self
     }
+    
     
     open func request(command: DataRequest, response : @escaping (_ response:Response) -> ()){
         
@@ -115,9 +113,7 @@ class `Scanner`: StreamHolder {
         state = .openingConnection
         
         obdQueue.cancelAllOperations()
-        
-        createStreams()
-        
+                
         // Open connection to OBD
         
         let openConnectionOperation = OpenOBDConnectionOperation(inputStream: inputStream, outputStream: outputStream)
