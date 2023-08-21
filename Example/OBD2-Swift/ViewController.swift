@@ -14,7 +14,10 @@ class ViewController: UIViewController {
     static var port = 35000
     
     //var scanTool = ELM327(host: host , port: port)
-    let obd = OBD2(host: host, port: port)
+    var obd = OBD2(host: host, port: port)
+    
+    private var _transporter: BLESerialTransporter!
+    private var _serviceUUIDS: [CBUUID] = [CBUUID]()
     
     @IBOutlet weak var dtcButton: UIButton!
     @IBOutlet weak var speedButton: UIButton!
@@ -28,8 +31,14 @@ class ViewController: UIViewController {
         
         // Do any additional setup after loading the view, typically from a nib.
         
-        //scanTool.sensorScanTargets = [0x0C, 0x0D]
         updateUI(connected: false)
+        
+        
+        
+    }
+    
+    func setupOBD2() -> Void {
+        
         let observer = Observer<Command.Mode01>()
         
         observer.observe(command: .pid(number: 12)) { (descriptor) in
@@ -98,6 +107,22 @@ class ViewController: UIViewController {
         }
     }
     
+    @IBAction func bluetoothScan( _ sender : UIButton) {
+        let uuids = ["FFF0", "FFE0", "BEEF" , "E7810A71-73AE-499D-8C15-FAA9AEF0C3F2", "00001101-0000-1000-8000-00805F9B34FB"];
+        uuids.forEach { uuid in
+            _serviceUUIDS.append(CBUUID(string: uuid))
+        }
+        _transporter = BLESerialTransporter(identifier: nil, serviceUUIDs: _serviceUUIDS)
+        _transporter.connect { inputStream, outputStream in
+            if let inputStream = inputStream,
+               let outputStream = outputStream {
+                self.obd = OBD2(inputStream: inputStream, outputStream: outputStream)
+            }
+        }
+//        let viewController = UIStoryboard(name: "Main", bundle: .main).instantiateViewController(withIdentifier: "BluetoothScanViewControllerID") as! BluetoothScanViewController
+//        viewController.modalPresentationStyle = .fullScreen
+//        self.present(viewController, animated: true)
+    }
     
     @IBAction func requestSpeed( _ sender : UIButton) {
         

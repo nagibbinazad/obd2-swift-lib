@@ -14,11 +14,11 @@ protocol ScanDelegate {
     func didReceive()
 }
 
-open class OBD2 {
+open class OBD2: NSObject {
     
     public typealias CallBack = (Bool, Error?) -> ()
     
-    private var scanner : Scanner
+    var scanner : Scanner
     
     public var stateChanged: StateChangeCallback? {
         didSet {
@@ -26,17 +26,8 @@ open class OBD2 {
         }
     }
 
-    public init(host : String, port : Int){
-        var readStream: InputStream?
-        var writeStream: OutputStream?
-        Stream.getStreamsToHost(withName: host, port: port, inputStream: &readStream, outputStream: &writeStream)
-        guard let inputStream = readStream else { fatalError("Read stream not created") }
-        guard let outputStream = writeStream else { fatalError("Write stream not created") }
-        self.scanner = Scanner(inputStream: inputStream, outputStream: outputStream)
-    }
-    
-    public init(reader: CBCharacteristic, writer: CBCharacteristic) {
-        self.scanner = Scanner(inputStream: BluetoothInputStream(characteristic: reader), outputStream: BluetoothOutputStream(characteristic: writer))
+    init(scanner: Scanner) {
+        self.scanner = scanner
     }
     
     var logger : Any?
@@ -124,5 +115,4 @@ open class OBD2 {
         ObserverQueue.shared.dispatch(command: command, response: response)
     }
 }
-
 

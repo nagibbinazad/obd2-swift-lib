@@ -8,7 +8,7 @@
 import Foundation
 import CoreBluetooth
 
-class BluetoothInputStream: InputStream {
+public class BluetoothInputStream: InputStream {
     
     private var _delegate: StreamDelegate?
     private var _status: Stream.Status!
@@ -16,7 +16,7 @@ class BluetoothInputStream: InputStream {
     private var _characteristic: CBCharacteristic
     private weak var _peripheral: CBPeripheral?
 
-    init(characteristic: CBCharacteristic) {
+    @objc public init(characteristic: CBCharacteristic) {
         self._characteristic = characteristic
         super.init(data: Data()) // Initialize with an empty Data object
         self._delegate = self
@@ -25,7 +25,7 @@ class BluetoothInputStream: InputStream {
     }
     
     //MARK: API
-    func characteristicDidUpdateValue() -> Void {
+    @objc public func characteristicDidUpdateValue() -> Void {
         if let value = _characteristic.value {
             _buffer.append(value)
             self.delegate?.stream?(self, handle: .hasBytesAvailable)
@@ -33,7 +33,7 @@ class BluetoothInputStream: InputStream {
     }
     
     //MARK: Stream overrides
-    override var delegate: StreamDelegate? {
+    public override var delegate: StreamDelegate? {
         set(delegate) {
             _delegate = delegate ?? self
         }
@@ -41,31 +41,31 @@ class BluetoothInputStream: InputStream {
             return _delegate
         }
     }
-    override func open() {
+    public override func open() {
         _status = .opening
         _buffer = NSMutableData()
         _status = .open
         self.delegate?.stream?(self, handle: .openCompleted)
     }
-    override func close() {
+    public override func close() {
         _status = .closed
         self.delegate?.stream?(self, handle: .endEncountered)
     }
-    override func schedule(in aRunLoop: RunLoop, forMode mode: RunLoopMode) {
+    public override func schedule(in aRunLoop: RunLoop, forMode mode: RunLoop.Mode) {
         // nothing to do here
     }
-    override func remove(from aRunLoop: RunLoop, forMode mode: RunLoopMode) {
+    public override func remove(from aRunLoop: RunLoop, forMode mode: RunLoop.Mode) {
         // nothing to do here
     }
-    override func property(forKey key: Stream.PropertyKey) -> Any? {
+    public override func property(forKey key: Stream.PropertyKey) -> Any? {
         return nil
     }
-    override func setProperty(_ property: Any?, forKey key: Stream.PropertyKey) -> Bool {
+    public override func setProperty(_ property: Any?, forKey key: Stream.PropertyKey) -> Bool {
         return false
     }
     
     //MARK: InputStream overrides
-    override func read(_ buffer: UnsafeMutablePointer<UInt8>, maxLength len: Int) -> Int {
+    public override func read(_ buffer: UnsafeMutablePointer<UInt8>, maxLength len: Int) -> Int {
         if _status != .open {
             return -1
         }
@@ -82,11 +82,11 @@ class BluetoothInputStream: InputStream {
         return maxBytesToRead
     }
     
-    override func getBuffer(_ buffer: UnsafeMutablePointer<UnsafeMutablePointer<UInt8>?>, length len: UnsafeMutablePointer<Int>) -> Bool {
+    public override func getBuffer(_ buffer: UnsafeMutablePointer<UnsafeMutablePointer<UInt8>?>, length len: UnsafeMutablePointer<Int>) -> Bool {
         return false
     }
     
-    override var hasBytesAvailable: Bool {
+    public override var hasBytesAvailable: Bool {
         if _status != .open {
             return false
         }

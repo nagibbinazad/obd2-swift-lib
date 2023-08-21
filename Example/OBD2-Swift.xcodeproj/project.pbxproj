@@ -13,6 +13,8 @@
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
+		CB26132D2A880743008435C0 /* BluetoothScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB26132C2A880743008435C0 /* BluetoothScanViewController.swift */; };
+		CBE0E4882A8BD7B500B82DB2 /* BLESerialTransporter.m in Sources */ = {isa = PBXBuildFile; fileRef = CBE0E4862A8BD7B500B82DB2 /* BLESerialTransporter.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +35,10 @@
 		AD59134CD0A2B62C7157BA83 /* OBD2-Swift.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = "OBD2-Swift.podspec"; path = "../OBD2-Swift.podspec"; sourceTree = "<group>"; };
 		B97A44C9329E830730530372 /* Pods-OBD2-Swift_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OBD2-Swift_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OBD2-Swift_Tests/Pods-OBD2-Swift_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		B99C0CC5AC0B1360B3D7F1FD /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		CB26132C2A880743008435C0 /* BluetoothScanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothScanViewController.swift; sourceTree = "<group>"; };
+		CB26132F2A88C545008435C0 /* OBD2-Swift_Example-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OBD2-Swift_Example-Bridging-Header.h"; sourceTree = "<group>"; };
+		CBE0E4862A8BD7B500B82DB2 /* BLESerialTransporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLESerialTransporter.m; sourceTree = "<group>"; };
+		CBE0E4872A8BD7B500B82DB2 /* BLESerialTransporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLESerialTransporter.h; sourceTree = "<group>"; };
 		E144880A1951F1FF015E1D42 /* Pods_OBD2_Swift_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OBD2_Swift_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -73,10 +79,14 @@
 			children = (
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
+				CBE0E4872A8BD7B500B82DB2 /* BLESerialTransporter.h */,
+				CBE0E4862A8BD7B500B82DB2 /* BLESerialTransporter.m */,
+				CB26132C2A880743008435C0 /* BluetoothScanViewController.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
+				CB26132F2A88C545008435C0 /* OBD2-Swift_Example-Bridging-Header.h */,
 			);
 			name = "Example for OBD2-Swift";
 			path = "OBD2-Swift";
@@ -149,7 +159,6 @@
 				607FACCD1AFB9204008FA782 /* Frameworks */,
 				607FACCE1AFB9204008FA782 /* Resources */,
 				BDC73313ABF071CF2CA189F5 /* [CP] Embed Pods Frameworks */,
-				6A5CED72B292CBEFEF3BF477 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -172,8 +181,9 @@
 				TargetAttributes = {
 					607FACCF1AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
-						DevelopmentTeam = J7LBYY3B34;
-						LastSwiftMigration = 0910;
+						DevelopmentTeam = 3DT94432UL;
+						LastSwiftMigration = 1430;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
@@ -182,6 +192,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -209,34 +220,22 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		6A5CED72B292CBEFEF3BF477 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-OBD2-Swift_Example/Pods-OBD2-Swift_Example-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		BDC73313ABF071CF2CA189F5 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-OBD2-Swift_Example/Pods-OBD2-Swift_Example-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/OBD2-Swift/OBD2.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OBD2.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-OBD2-Swift_Example/Pods-OBD2-Swift_Example-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-OBD2-Swift_Example/Pods-OBD2-Swift_Example-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		DFF6433D23FCB1F33C50E668 /* [CP] Check Pods Manifest.lock */ = {
@@ -245,13 +244,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-OBD2-Swift_Example-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -262,7 +264,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
+				CB26132D2A880743008435C0 /* BluetoothScanViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
+				CBE0E4882A8BD7B500B82DB2 /* BLESerialTransporter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -392,15 +396,22 @@
 			baseConfigurationReference = 273BA881D0B503C7C37377B9 /* Pods-OBD2-Swift_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = J7LBYY3B34;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 3DT94432UL;
 				INFOPLIST_FILE = "OBD2-Swift/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.azerion.ads.testapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Azerion Ads Test Application - Development";
+				SWIFT_OBJC_BRIDGING_HEADER = "OBD2-Swift/OBD2-Swift_Example-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -409,15 +420,17 @@
 			baseConfigurationReference = 8BD1F9600CDD4D67A5F6339D /* Pods-OBD2-Swift_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = J7LBYY3B34;
 				INFOPLIST_FILE = "OBD2-Swift/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.azerion.ads.testapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "OBD2-Swift/OBD2-Swift_Example-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};

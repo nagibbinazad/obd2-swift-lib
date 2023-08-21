@@ -10,7 +10,8 @@
 #endif
 #endif
 
+#import "OBD2Swift.h"
 
-FOUNDATION_EXPORT double OBD2_SwiftVersionNumber;
-FOUNDATION_EXPORT const unsigned char OBD2_SwiftVersionString[];
+FOUNDATION_EXPORT double OBD2VersionNumber;
+FOUNDATION_EXPORT const unsigned char OBD2VersionString[];
 

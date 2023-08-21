@@ -15,8 +15,8 @@ class StreamHandleOperation: Operation, StreamDelegate {
     
     var error:Error? {
         didSet {
-            input.remove(from: .current, forMode: .defaultRunLoopMode)
-            output.remove(from: .current, forMode: .defaultRunLoopMode)
+            input.remove(from: .current, forMode: .default)
+            output.remove(from: .current, forMode: .default)
         }
     }
     
@@ -36,8 +36,8 @@ class StreamHandleOperation: Operation, StreamDelegate {
         self.input.delegate = self
         self.output.delegate = self
 
-        input.schedule(in: .current, forMode: .defaultRunLoopMode)
-        output.schedule(in: .current, forMode: .defaultRunLoopMode)
+        input.schedule(in: .current, forMode: .default)
+        output.schedule(in: .current, forMode: .default)
         execute()
         RunLoop.current.run()
     }

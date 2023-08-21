@@ -8,13 +8,13 @@
 import Foundation
 import CoreBluetooth
 
-class BluetoothOutputStream: OutputStream {
+public class BluetoothOutputStream: OutputStream {
     
     private var _delegate: StreamDelegate?
     private var _status: Stream.Status!
     private var _characteristic: CBCharacteristic
     
-    init(characteristic: CBCharacteristic) {
+    @objc public init(characteristic: CBCharacteristic) {
         self._characteristic = characteristic
         super.init(toMemory: ())
         self._delegate = self
@@ -22,12 +22,12 @@ class BluetoothOutputStream: OutputStream {
     }
     
     //MARK: API
-    func characteristicDidWriteValue() -> Void {
+    @objc public func characteristicDidWriteValue() -> Void {
         self.delegate?.stream?(self, handle: .hasSpaceAvailable)
     }
     
     //MARK: Stream overrides
-    override var delegate: StreamDelegate? {
+    public override var delegate: StreamDelegate? {
         set(delegate) {
             _delegate = delegate ?? self
         }
@@ -35,32 +35,32 @@ class BluetoothOutputStream: OutputStream {
             return _delegate
         }
     }
-    override func open() {
+    public override func open() {
         _status = .opening
         _status = .open
         self.delegate?.stream?(self, handle: .openCompleted)
         self.delegate?.stream?(self, handle: .hasSpaceAvailable)
     }
-    override func close() {
+    public override func close() {
         _status = .closed
         self.delegate?.stream?(self, handle: .endEncountered)
     }
-    override func schedule(in aRunLoop: RunLoop, forMode mode: RunLoopMode) {
+    public override func schedule(in aRunLoop: RunLoop, forMode mode: RunLoop.Mode) {
         // nothing to do here
     }
-    override func remove(from aRunLoop: RunLoop, forMode mode: RunLoopMode) {
+    public override func remove(from aRunLoop: RunLoop, forMode mode: RunLoop.Mode) {
         // nothing to do here
     }
-    override func property(forKey key: Stream.PropertyKey) -> Any? {
+    public override func property(forKey key: Stream.PropertyKey) -> Any? {
         return nil
     }
-    override func setProperty(_ property: Any?, forKey key: Stream.PropertyKey) -> Bool {
+    public override func setProperty(_ property: Any?, forKey key: Stream.PropertyKey) -> Bool {
         return false
     }
     
     //MARK: OutputStream overrides
     
-    override func write(_ buffer: UnsafePointer<UInt8>, maxLength len: Int) -> Int {
+    public override func write(_ buffer: UnsafePointer<UInt8>, maxLength len: Int) -> Int {
         if _status != .open {
             return -1;
         }
@@ -71,7 +71,7 @@ class BluetoothOutputStream: OutputStream {
         return lengthToWrite
     }
     
-    override var hasSpaceAvailable: Bool {
+    public override var hasSpaceAvailable: Bool {
         if _status != .open {
             return false
         }
