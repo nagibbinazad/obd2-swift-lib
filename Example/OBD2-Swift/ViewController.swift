@@ -14,7 +14,7 @@ class ViewController: UIViewController {
     static var port = 35000
     
     //var scanTool = ELM327(host: host , port: port)
-    var obd = OBD2(host: host, port: port)
+    var obd: OBD2 = WifiObd2(host: host, port: port)
     
     private var _transporter: BLESerialTransporter!
     private var _serviceUUIDS: [CBUUID] = [CBUUID]()
@@ -116,12 +116,9 @@ class ViewController: UIViewController {
         _transporter.connect { inputStream, outputStream in
             if let inputStream = inputStream,
                let outputStream = outputStream {
-                self.obd = OBD2(inputStream: inputStream, outputStream: outputStream)
+                self.obd = BluetoothObd2(inputStream: inputStream, outputStream: outputStream)
             }
         }
-//        let viewController = UIStoryboard(name: "Main", bundle: .main).instantiateViewController(withIdentifier: "BluetoothScanViewControllerID") as! BluetoothScanViewController
-//        viewController.modalPresentationStyle = .fullScreen
-//        self.present(viewController, animated: true)
     }
     
     @IBAction func requestSpeed( _ sender : UIButton) {

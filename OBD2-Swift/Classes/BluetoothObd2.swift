@@ -8,7 +8,11 @@
 import Foundation
 import CoreBluetooth
 
-class BluetoothObd2: OBD2 {
+open class BluetoothObd2: OBD2 {
+    
+    public init(inputStream: InputStream, outputStream: OutputStream) {
+        super.init(scanner: BleScanner(inputStream: inputStream, outputStream: outputStream))
+    }
     
     @objc public func characteristicDidUpdateValue() -> Void {
         if let scanner = scanner as? BleScanner {
